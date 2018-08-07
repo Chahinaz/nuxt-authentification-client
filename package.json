@@ -14,6 +14,7 @@
     "@nuxtjs/axios": "^5.0.0",
     "element-ui": "^2.2.1",
     "express": "^4.15.3",
+    "gsap": "^2.0.1",
     "nuxt": "^1.0.0",
     "semantic-ui-css": "^2.3.3",
     "semantic-ui-vue": "^0.2.11"

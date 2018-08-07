@@ -1,23 +1,41 @@
 <template>
   <div>
     <Menu></Menu>
+    <div v-if="isHomePage">
+      <Header></Header>
+    </div>
     <nuxt/>
   </div>
 </template>
 
 <script>
 import Menu from '../components/header/Menu.vue'
+import Header from '../components/header/Header.vue'
 
 export default {
+  props: {
+    isHomePage: {
+      type: Boolean,
+      default: true
+    }
+  },
   components: {
-    Menu
-  }
+    Menu,
+    Header
+  },
+  data() {
+    return {
+      /*
+       -- Change isHomePage value to false if $nuxt.$router.path !== "/"
+      this.isHomePage = $nuxt.$router.path === '/';
+      */
+    }
+  },
 }
 </script>
 
 <style>
-html
-{
+html {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
@@ -27,8 +45,8 @@ html
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
-*, *:before, *:after
-{
+
+*, *:before, *:after {
   box-sizing: border-box;
   margin: 0;
 }
