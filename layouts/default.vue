@@ -1,16 +1,16 @@
 <template>
   <div>
-    <Menu></Menu>
-    <div v-if="isHomePage">
-      <Header></Header>
-    </div>
+    <Menu/>
+    <div v-if="isHomePage"><Header/></div>
     <nuxt/>
+    <div><Footer/></div>
   </div>
 </template>
 
 <script>
 import Menu from '../components/header/Menu.vue'
 import Header from '../components/header/Header.vue'
+import Footer from '../components/Footer.vue'
 
 export default {
   props: {
@@ -21,7 +21,8 @@ export default {
   },
   components: {
     Menu,
-    Header
+    Header,
+    Footer
   },
   data() {
     return {
@@ -30,7 +31,7 @@ export default {
       this.isHomePage = $nuxt.$router.path === '/';
       */
     }
-  },
+  }
 }
 </script>
 
