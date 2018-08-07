@@ -22,6 +22,10 @@
 </script>
 
 <style>
+  a {
+    color: #FFFFFF !important;
+  }
+
   .inverted {
     border-radius: 0 !important;
     background-color: #333230 !important;
