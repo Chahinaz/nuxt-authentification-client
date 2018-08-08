@@ -20,5 +20,6 @@
   .footer {
     background-color: #333230 !important;
     color: #FFFFFF;
+    margin-top: 2rem !important;
   }
 </style>
