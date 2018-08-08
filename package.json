@@ -22,7 +22,9 @@
   },
   "devDependencies": {
     "cross-env": "^5.0.1",
+    "node-sass": "^4.9.2",
     "nodemon": "^1.11.0",
+    "sass-loader": "^7.1.0",
     "semantic-ui": "^2.3.3"
   }
 }

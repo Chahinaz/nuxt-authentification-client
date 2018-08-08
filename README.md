@@ -18,3 +18,10 @@ $ npm start
 # generate static project
 $ npm run generate
 ```
+
+## Tools
+``` bash
+scss: npm install node-sass sass-loader -D
+gasp: npm i gasp > for animated header
+Express, Vuex, Axios: initialized with > npm create-nuxt-app
+```
