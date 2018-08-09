@@ -16,7 +16,7 @@ export default {
   props: {
     isHomePage: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   components: {

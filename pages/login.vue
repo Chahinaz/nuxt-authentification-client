@@ -15,17 +15,16 @@
           <div class="eight wide left aligned column">
             <div class="ui checked checkbox">
               <input type="checkbox" name="example">
-              <label>Stay log in</label>
+              <label>Remember me</label>
             </div>
           </div>
-
-          <div class="eight wide right aligned column">
-            <nuxt-link to="/recoverPassword" class="ui link">Forgotten Passwork?</nuxt-link>
+          <div class="eight wide right aligned column">Forgotten
+            <nuxt-link style="color: #3c9dd3 !important;" to="/recoverPassword" class="ui link"> Password?</nuxt-link>
           </div>
         </div>
 
         <button class="ui gray button margin-top" @click="goToHome()">Log in</button>
-        <p>You don't have an account? <nuxt-link to="/signUp" class="ui link">Sign up</nuxt-link></p>
+        <p>You don't have an account? <nuxt-link style="color: #3c9dd3 !important;" to="/signUp" class="ui link">Sign up</nuxt-link></p>
       </form>
     </div>
   </div>
@@ -49,6 +48,10 @@
     color: #333230 !important;
   }
 
+  label {
+    padding-left: 1.6rem !important;
+  }
+
   a{
     color: #333230 !important;
   }
@@ -59,5 +62,9 @@
 
   form {
     margin: 0 1rem 0 1rem;
+  }
+
+  .container {
+    margin-top: 2rem !important;
   }
 </style>

@@ -3,15 +3,15 @@
     <div class="ui simple dropdown item">
       My account
       <i class="dropdown icon"></i>
-      <div class="menu">
-        <nuxt-link class="header item" to="/login" v-if="disconnected">Login</nuxt-link>
-        <nuxt-link class="header item" to="/logout" v-if="!disconnected">Logout</nuxt-link>
+      <div class="ui inverted menu">
+        <a class="header item" href="/login"  v-if="disconnected">Login</a>
+        <a class="header item" href="/logout" v-if="!disconnected">Logout</a>
       </div>
     </div>
     <div class="right menu">
       <nuxt-link class="header item" to="/">Home</nuxt-link>
-      <nuxt-link class="header item" to="/cv">Resume</nuxt-link>
       <nuxt-link class="header item" to="/blog">Blog</nuxt-link>
+      <nuxt-link class="header item" to="/cv">Resume</nuxt-link>
     </div>
   </div>
 </template>
@@ -27,14 +27,8 @@
   }
 </script>
 
-<style>
-  a {
+<style scoped>
+  a, .item {
     color: #FFFFFF !important;
-  }
-
-  .inverted {
-    border-radius: 0 !important;
-    background-color: #333230 !important;
-    margin: 0 !important;
   }
 </style>

@@ -22,4 +22,8 @@
     color: #FFFFFF;
     margin-top: 2rem !important;
   }
+
+  a {
+    color: #FFFFFF !important;
+  }
 </style>
