@@ -13,12 +13,6 @@ import Header from '../components/header/Header.vue'
 import Footer from '../components/Footer.vue'
 
 export default {
-  props: {
-    isHomePage: {
-      type: Boolean,
-      default: false
-    }
-  },
   components: {
     Menu,
     Header,
@@ -26,10 +20,7 @@ export default {
   },
   data() {
     return {
-      /*
-       -- Change isHomePage value to false if $nuxt.$router.path !== "/"
-      this.isHomePage = $nuxt.$router.path === '/';
-      */
+      isHomePage: this.$router.history.current.fullPath === "/" || ""
     }
   }
 }
