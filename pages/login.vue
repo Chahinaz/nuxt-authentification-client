@@ -24,7 +24,7 @@
         </div>
 
         <button class="ui gray button margin-top" @click="goToHome()">Log in</button>
-        <p>You don't have an account? <nuxt-link style="color: #3c9dd3 !important;" to="/signUp" class="ui link">Sign up</nuxt-link></p>
+        <p>You don't have an account? <nuxt-link style="color: #3c9dd3 !important;" to="/register" class="ui link">Sign up</nuxt-link></p>
       </form>
     </div>
   </div>

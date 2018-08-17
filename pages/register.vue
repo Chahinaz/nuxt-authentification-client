@@ -1,33 +1,32 @@
 <template>
   <div class="ui container margin">
     <div class="ui center aligned grid">
-      <form class="ui form" method="post" @submit.prevent="register">
+      <form class="ui form" @submit.prevent="handleSubmit">
+
+        <Notification :message="error" v-if="error"></Notification>
+
         <div class="text-centred">
           <h2 class="ui header margin-bot">Register and join the community ~</h2>
         </div>
         <div class="field margin-top">
           <div class="two fields">
             <div class="field">
-              <input type="text" name="first-name" placeholder="First Name">
+              <input type="text" v-model="firstName" name="first-name" placeholder="First Name">
             </div>
             <div class="field">
-              <input type="text" name="last-name" placeholder="Last Name">
+              <input type="text" v-model="lastName" name="last-name" placeholder="Last Name">
             </div>
           </div>
         </div>
 
         <div class="field">
-          <input type="text" name="username" placeholder="Username">
-        </div>
-
-        <div class="field">
-          <input type="email" name="email" placeholder="Email">
+          <input type="email" v-model="email" name="email" placeholder="Email">
         </div>
 
         <!--<div class="field">-->
           <!--<div class="two fields">-->
             <div class="field">
-              <input type="password" name="password" placeholder="Password">
+              <input type="password" v-model="password" name="password" placeholder="Password">
             </div>
             <!--<div class="field">-->
               <!--<input type="password" name="confirmed-password" placeholder="Confirm Password">-->
@@ -63,6 +62,41 @@
     </div>
   </div>
 </template>
+
+<script>
+import Notification from '../components/Notification.vue'
+
+export default {
+  components: {
+    Notification
+  },
+  data() {
+    return {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      error: null
+    }
+  },
+  methods: {
+    handleSubmit() {
+      try {
+        this.$axios.post('register', {
+          profile: {
+            firstName: this.firstName,
+            lastName: this.lastName
+          },
+          email: this.email,
+          password: this.password
+        });
+      } catch (e){
+        this.e = e.message
+      }
+    }
+  }
+}
+</script>
 
 <style scoped>
   a{
