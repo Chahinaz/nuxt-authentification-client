@@ -81,7 +81,6 @@ export default {
   },
   methods: {
     handleSubmit() {
-      try {
         this.$axios.post('register', {
           profile: {
             firstName: this.firstName,
@@ -89,10 +88,12 @@ export default {
           },
           email: this.email,
           password: this.password
-        });
-      } catch (e){
-        this.e = e.message
-      }
+        })
+          .then(res => console.log(res))
+          .catch(e => {
+            console.log(e);
+            this.error = e.message
+          });
     }
   }
 }
