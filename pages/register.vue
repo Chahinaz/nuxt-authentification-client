@@ -81,19 +81,17 @@ export default {
   },
   methods: {
     handleSubmit() {
-        this.$axios.post('register', {
-          profile: {
-            firstName: this.firstName,
-            lastName: this.lastName
-          },
-          email: this.email,
-          password: this.password
-        })
-          .then(res => console.log(res))
-          .catch(e => {
-            console.log(e);
-            this.error = e.message
-          });
+      this.$axios.post('register', {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password
+      })
+        .then(res => console.log(res))
+        .catch(e => {
+          console.log(e);
+          this.error = e.message
+        });
     }
   }
 }
