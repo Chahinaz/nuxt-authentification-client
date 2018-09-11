@@ -44,6 +44,7 @@ module.exports = {
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
+    '@nuxtjs/auth',
     'semantic-ui-vue/nuxt'
   ],
   /*
@@ -51,6 +52,18 @@ module.exports = {
   */
   axios: {
     baseURL: 'http://localhost:3333/'
+  },
+
+  auth: {
+    strategies: {
+     local: {
+       endpoints: {
+         login: {url: 'login', method:'post', propertyName: 'data.token'},
+         user: {url: 'profile', method:'get', propertyName: 'data'},
+         logout: false
+       }
+     }
+    }
   },
 
   /*

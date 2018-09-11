@@ -80,20 +80,29 @@ export default {
     }
   },
   methods: {
-    handleSubmit() {
-      this.$axios.post('register', {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        password: this.password
-      })
-        .then(res => console.log(res))
-        .catch(e => {
+    async handleSubmit() {
+      try {
+        await this.$axios.post('register', {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.email,
+          password: this.password
+        });
+
+        await this.$auth.loginWith('local', {
+          data: {
+            email: this.email,
+            password: this.password
+          }
+        })
+
+      }catch(e) {
           console.log(e);
           this.error = e.message
-        });
+      }
     }
-  }
+  },
+  middleware: 'guest'
 }
 </script>
 
