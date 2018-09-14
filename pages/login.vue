@@ -1,7 +1,7 @@
 <template>
   <div class="ui container">
     <div class="ui center aligned grid">
-      <form class="ui form margin-top" method="post" @submit.prevent="logIn">
+      <form class="ui form margin-top" method="post" @submit.prevent="login">
 
         <Notification :message="error" v-if="error"></Notification>
         <h2>Log in to chat, share and comment.</h2>
@@ -16,7 +16,7 @@
         <div class=" ui grid margin-top">
           <div class="eight wide left aligned column">
             <div class="ui checked checkbox">
-              <input type="checkbox" name="remember">
+              <input id="rememberMe" type="checkbox" name="rememberMe">
               <label>Remember me</label>
             </div>
           </div>
@@ -36,27 +36,38 @@
 
 <script>
 import Notification from "../components/Notification.vue"
+import {mapMutations, mapGetters} from "vuex"
+import Cookie from "js-cookie"
 
 export default {
   middleware: 'guest',
   components: {
     Notification
   },
+  computed: {
+    ...mapMutations(['updateAuth']),
+    ...mapGetters(['isAuthenticated'])
+  },
   data() {
     return {
       email: '',
       password: '',
+      rememberMe: false,
       error: null
     }
   },
   methods: {
-    async logIn() {
+    async login() {
       await this.$axios.post('login', {
         email: this.email,
-        password: this.password
-      }).then(res => {
-        console.log("res of login === ", res);
-
+        password: this.password,
+        rememberMe: this.rememberMe
+      })
+        .then(res => {
+          Cookie.set('token', res.data.token, { expires: this.rememberMe ? 365 : null });
+          this.$store.commit('updateAuth', !(this.isAuthenticated));
+          this.$store.commit('updateUser', res.data.user);
+          this.$router.push('/');
       })
         .catch(e => {
         this.error = e.message

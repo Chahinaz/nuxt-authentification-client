@@ -102,19 +102,10 @@ export default {
         });
 
         //Then logIn()
-//          try {
-//            await this.$auth.loginWith('local', {
-//              data: {
-//                email: this.email,
-//                password: this.password,
-//              },
-//            });
-//          } catch (e) {
-//            this.error = e.message;
-//          }
-
-//        await this.$auth.login({email: this.email, password: this.password});
-//        this.$router.push('/');
+        await this.$axios.post('login', {
+          email: this.email,
+          password: this.password
+        })
 
       } catch(e) {
           console.log(e);

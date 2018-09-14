@@ -3,7 +3,7 @@
     <div class="content">
       <div id="large-header" class="large-header">
         <canvas id="demo-canvas" style="width: 100%"></canvas>
-        <h1 class="main-title"><span class="thin">Apprentice</span> Web developper</h1>
+        <h1 class="main-title"><span class="thin">Apprentice</span> Nuxt developper</h1>
       </div>
     </div>
   </div>
