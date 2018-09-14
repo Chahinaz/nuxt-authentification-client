@@ -4,7 +4,6 @@
       <form class="ui form margin-top" method="post" @submit.prevent="logIn">
 
         <Notification :message="error" v-if="error"></Notification>
-
         <h2>Log in to chat, share and comment.</h2>
         <div class="margin-top">
           <input v-model="email" type="email" name="email" placeholder="Email">
