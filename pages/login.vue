@@ -1,20 +1,23 @@
 <template>
   <div class="ui container">
     <div class="ui center aligned grid">
-      <form class="ui form margin-top" method="post" @submit="">
+      <form class="ui form margin-top" method="post" @submit.prevent="logIn">
+
+        <Notification :message="error" v-if="error"></Notification>
+
         <h2>Log in to chat, share and comment.</h2>
         <div class="margin-top">
-          <input id="mail" type="email" name="mail" placeholder="Email">
+          <input v-model="email" type="email" name="email" placeholder="Email">
         </div>
 
         <div class="margin-top">
-          <input id="password" type="password" name="password" placeholder="Password">
+          <input v-model="password" type="password" name="password" placeholder="Password">
         </div>
 
         <div class=" ui grid margin-top">
           <div class="eight wide left aligned column">
             <div class="ui checked checkbox">
-              <input type="checkbox" name="example">
+              <input type="checkbox" name="remember">
               <label>Remember me</label>
             </div>
           </div>
@@ -23,37 +26,55 @@
           </div>
         </div>
 
-        <button class="ui gray button margin-top" @click="goToHome()">Log in</button>
-        <p>You don't have an account? <nuxt-link style="color: #3c9dd3 !important;" to="/register" class="ui link">Sign up</nuxt-link></p>
+        <button class="ui gray button margin-top" type="submit">Log in</button>
+        <p>You don't have an account?
+          <nuxt-link style="color: #3c9dd3 !important;" to="/register" class="ui link">Sign up</nuxt-link>
+        </p>
       </form>
     </div>
   </div>
 </template>
 
-
-
 <script>
-  export default {
-    methods: {
-      goToHome() {
-        this.$router.push("/")
-      }
+import Notification from "../components/Notification.vue"
+
+export default {
+  middleware: 'guest',
+  components: {
+    Notification
+  },
+  data() {
+    return {
+      email: '',
+      password: '',
+      error: null
+    }
+  },
+  methods: {
+    async logIn() {
+      await this.$axios.post('login', {
+        email: this.email,
+        password: this.password
+      }).then(res => {
+        console.log("res of login === ", res);
+
+      })
+        .catch(e => {
+        this.error = e.message
+      })
     }
   }
+}
 </script>
 
 
 <style scoped>
-  *::selection {
+  *::selection, a {
     color: #333230 !important;
   }
 
   label {
     padding-left: 1.6rem !important;
-  }
-
-  a{
-    color: #333230 !important;
   }
 
   div {

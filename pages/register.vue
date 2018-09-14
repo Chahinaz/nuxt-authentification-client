@@ -38,7 +38,7 @@
           <div class="ui grid margin-top">
             <div class="eight wide left aligned column">
               <div class="ui checkbox">
-                <input type="checkbox" tabindex="0">
+                <input type="checkbox" id="terms" >
                 <label>I agree to the
                   <a href="/terms" style="color: #3c9dd3 !important;">Terms</a>
                   and
@@ -59,6 +59,17 @@
 
         </p>
       </form>
+
+      $('.ui.form')
+      .form({ fields: {
+          firstName : 'empty',
+          lastName : 'empty',
+          email : 'empty',
+          password : ['minLength[6]', 'empty'],
+          terms    : 'checked'
+        }
+      })
+
     </div>
   </div>
 </template>
@@ -67,6 +78,7 @@
 import Notification from '../components/Notification.vue'
 
 export default {
+  middleware: 'guest',
   components: {
     Notification
   },
@@ -80,18 +92,33 @@ export default {
     }
   },
   methods: {
-    handleSubmit() {
+    async handleSubmit() {
       try {
-        this.$axios.post('register', {
-          profile: {
-            firstName: this.firstName,
-            lastName: this.lastName
-          },
+        await this.$axios.post('register', {
+          firstName: this.firstName,
+          lastName: this.lastName,
           email: this.email,
           password: this.password
         });
-      } catch (e){
-        this.e = e.message
+
+        //Then logIn()
+//          try {
+//            await this.$auth.loginWith('local', {
+//              data: {
+//                email: this.email,
+//                password: this.password,
+//              },
+//            });
+//          } catch (e) {
+//            this.error = e.message;
+//          }
+
+//        await this.$auth.login({email: this.email, password: this.password});
+//        this.$router.push('/');
+
+      } catch(e) {
+          console.log(e);
+          this.error = e.message
       }
     }
   }
