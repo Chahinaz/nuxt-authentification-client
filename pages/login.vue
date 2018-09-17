@@ -21,7 +21,8 @@
             </div>
           </div>
           <div class="eight wide right aligned column">Forgotten
-            <nuxt-link style="color: #3c9dd3 !important;" to="/recoverPassword" class="ui link"> Password?</nuxt-link>
+            <!--<nuxt-link class="ui link" style="color: #3c9dd3 !important;" to="/recoverPassword"> Password?</nuxt-link>-->
+
           </div>
         </div>
 
@@ -70,7 +71,7 @@ export default {
           this.$router.push('/');
       })
         .catch(e => {
-        this.error = e.message
+          this.error = e.response.data.message
       })
     }
   }

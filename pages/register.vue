@@ -38,11 +38,11 @@
           <div class="ui grid margin-top">
             <div class="eight wide left aligned column">
               <div class="ui checkbox">
-                <input type="checkbox" id="terms" >
+                <input type="checkbox" v-model="terms">
                 <label>I agree to the
-                  <a href="/terms" style="color: #3c9dd3 !important;">Terms</a>
+                  <nuxt-link to="/termsAndConditions" style="color: #3c9dd3 !important;">Terms</nuxt-link>
                   and
-                  <a href="/conditions" style="color: #3c9dd3 !important;">Conditions</a>
+                  <nuxt-link to="/termsAndConditions" style="color: #3c9dd3 !important;">Conditions</nuxt-link>
                 </label>
               </div>
             </div>
@@ -53,37 +53,29 @@
         </div>
 
         <div class="text-centred">
-          <button class="ui button" type="submit">Sign in</button>
+          <button class="ui button" type="submit" :disabled="terms === 0">Sign in</button>
         </div>
         <p class="text-centred">
 
         </p>
       </form>
-
-      $('.ui.form')
-      .form({ fields: {
-          firstName : 'empty',
-          lastName : 'empty',
-          email : 'empty',
-          password : ['minLength[6]', 'empty'],
-          terms    : 'checked'
-        }
-      })
-
     </div>
   </div>
 </template>
 
 <script>
 import Notification from '../components/Notification.vue'
+import NuxtLink from "../.nuxt/components/nuxt-link";
 
 export default {
   middleware: 'guest',
   components: {
+    NuxtLink,
     Notification
   },
   data() {
     return {
+      terms: 0,
       firstName: '',
       lastName: '',
       email: '',
@@ -109,7 +101,7 @@ export default {
 
       } catch(e) {
           console.log(e);
-          this.error = e.message
+          this.error = e.response.data.message
       }
     }
   }
