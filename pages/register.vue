@@ -38,11 +38,11 @@
           <div class="ui grid margin-top">
             <div class="eight wide left aligned column">
               <div class="ui checkbox">
-                <input type="checkbox" tabindex="0">
+                <input type="checkbox" v-model="terms">
                 <label>I agree to the
-                  <a href="/terms" style="color: #3c9dd3 !important;">Terms</a>
+                  <nuxt-link to="/termsAndConditions" style="color: #3c9dd3 !important;">Terms</nuxt-link>
                   and
-                  <a href="/conditions" style="color: #3c9dd3 !important;">Conditions</a>
+                  <nuxt-link to="/termsAndConditions" style="color: #3c9dd3 !important;">Conditions</nuxt-link>
                 </label>
               </div>
             </div>
@@ -53,7 +53,7 @@
         </div>
 
         <div class="text-centred">
-          <button class="ui button" type="submit">Sign in</button>
+          <button class="ui button" type="submit" :disabled="terms === 0">Sign in</button>
         </div>
         <p class="text-centred">
 
@@ -65,13 +65,17 @@
 
 <script>
 import Notification from '../components/Notification.vue'
+import NuxtLink from "../.nuxt/components/nuxt-link";
 
 export default {
+  middleware: 'guest',
   components: {
+    NuxtLink,
     Notification
   },
   data() {
     return {
+      terms: 0,
       firstName: '',
       lastName: '',
       email: '',
@@ -80,18 +84,25 @@ export default {
     }
   },
   methods: {
-    handleSubmit() {
-      this.$axios.post('register', {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        password: this.password
-      })
-        .then(res => console.log(res))
-        .catch(e => {
-          console.log(e);
-          this.error = e.message
+    async handleSubmit() {
+      try {
+        await this.$axios.post('register', {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.email,
+          password: this.password
         });
+
+        //Then logIn()
+        await this.$axios.post('login', {
+          email: this.email,
+          password: this.password
+        })
+
+      } catch(e) {
+          console.log(e);
+          this.error = e.response.data.message
+      }
     }
   }
 }

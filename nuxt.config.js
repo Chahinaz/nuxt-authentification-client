@@ -44,6 +44,7 @@ module.exports = {
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
+    '@nuxtjs/auth',
     'semantic-ui-vue/nuxt'
   ],
   /*
@@ -53,6 +54,18 @@ module.exports = {
     baseURL: 'http://localhost:3333/'
   },
 
+  auth: {
+    strategies: {
+     local: {
+       endpoints: {
+         login: {url: 'login', method:'post', propertyName: 'data'},
+         user: {url: 'profile', propertyName: 'data'},
+         logout: false
+       }
+     }
+    }
+  },
+
   /*
   ** Build configuration
   */
@@ -60,8 +73,19 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    extend(config, ctx) {
-
+    extend (config, { isDev, isClient }) {
+      // config.node = {
+      //   fs: 'empty'
+      // };
+      //
+      // if (isDev && isClient) {
+      //   config.module.rules.push({
+      //     enforce: 'pre',
+      //     test: /\.(js|vue)$/,
+      //     loader: 'eslint-loader',
+      //     exclude: /(node_modules)/
+      //   })
+      // }
     }
   }
 };

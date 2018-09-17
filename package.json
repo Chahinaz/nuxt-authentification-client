@@ -13,11 +13,13 @@
   "dependencies": {
     "@nuxtjs/auth": "^4.5.1",
     "@nuxtjs/axios": "^5.3.1",
+    "cookieparser": "^0.1.0",
     "cors": "^2.8.4",
     "element-ui": "^2.2.1",
     "express": "^4.15.3",
     "gsap": "^2.0.1",
     "hoek": "^5.0.3",
+    "js-cookie": "^2.2.0",
     "nuxt": "^1.0.0",
     "semantic-ui-css": "^2.3.3",
     "semantic-ui-vue": "^0.2.11"
