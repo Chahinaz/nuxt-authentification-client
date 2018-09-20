@@ -7,14 +7,14 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: pkg.name,
+    title: "Chahinaz",
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/images/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon' || 'image/png', href: '/images/icon2.png' }
     ]
   },
 
@@ -74,18 +74,6 @@ module.exports = {
     ** You can extend webpack config here
     */
     extend (config, { isDev, isClient }) {
-      // config.node = {
-      //   fs: 'empty'
-      // };
-      //
-      // if (isDev && isClient) {
-      //   config.module.rules.push({
-      //     enforce: 'pre',
-      //     test: /\.(js|vue)$/,
-      //     loader: 'eslint-loader',
-      //     exclude: /(node_modules)/
-      //   })
-      // }
     }
   }
 };

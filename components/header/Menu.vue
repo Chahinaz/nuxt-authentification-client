@@ -1,7 +1,7 @@
 <template>
   <div class="ui inverted menu">
     <div class="ui simple dropdown item" v-if="isAuthenticated">
-      <header class="tiny header item">Navigate</header>
+      <h5 class="header no-margin">Navigate</h5>
       <div class="menu">
         <nuxt-link class="item" to="/profile">Profile</nuxt-link>
         <a class="item" @click="logout">Log Out</a>

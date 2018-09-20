@@ -21,8 +21,7 @@
             </div>
           </div>
           <div class="eight wide right aligned column">Forgotten
-            <!--<nuxt-link class="ui link" style="color: #3c9dd3 !important;" to="/recoverPassword"> Password?</nuxt-link>-->
-
+            <nuxt-link class="ui link" style="color: #3c9dd3 !important;" to="/recoverPassword"> Password?</nuxt-link>
           </div>
         </div>
 
@@ -51,8 +50,8 @@ export default {
   },
   data() {
     return {
-      email: '',
-      password: '',
+      email: 'Chahinaz@Dindane.com',
+      password: 'testtest',
       rememberMe: false,
       error: null
     }
@@ -71,7 +70,7 @@ export default {
           this.$router.push('/');
       })
         .catch(e => {
-          this.error = e.response.data.message
+          this.error = e
       })
     }
   }

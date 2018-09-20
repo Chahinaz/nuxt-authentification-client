@@ -18,5 +18,6 @@ export const mutations = {
   }
 };
 
+export const strict = false;
 
 
