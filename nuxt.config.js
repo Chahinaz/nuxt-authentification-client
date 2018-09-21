@@ -14,7 +14,7 @@ module.exports = {
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon' || 'image/png', href: '/images/icon2.png' }
+      { rel: 'icon', type: 'image/x-icon' || 'image/png' || 'image/gif', href: '/images/icon2.png' }
     ]
   },
 
@@ -44,7 +44,6 @@ module.exports = {
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
-    '@nuxtjs/auth',
     'semantic-ui-vue/nuxt'
   ],
   /*

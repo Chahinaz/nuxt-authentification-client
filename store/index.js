@@ -1,23 +1,11 @@
-export const getters = {
-  isAuthenticated(state){
-    return state.auth.loggedIn
-  },
+import profile from './modules/profile';
+import auth from './modules/auth';
 
-  getLoggedUser(state){
-    return state.auth.user
+export default {
+  modules: {
+    profile,
+    auth
   }
 };
-
-export const mutations = {
-  updateAuth(state, data) {
-    state.auth.loggedIn = data;
-  },
-
-  updateUser(state, data) {
-    state.auth.user = data;
-  }
-};
-
-export const strict = false;
 
 

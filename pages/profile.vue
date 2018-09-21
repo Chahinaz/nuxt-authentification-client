@@ -3,53 +3,48 @@
     <div class="ui items">
       <div class="ui item">
 
-        <div class="ui medium image margin-bot text-left" v-if="user.profile.image === '' || user.profile.image.isUndefined">
-          <img src="~/static/images/defaultProfilePicture.png">
-        </div>
-        <div class="ui medium image margin-bot text-left" v-else> {{user.profile.image}} </div>
+        <div class="ui medium image margin-bot text-left"> {{profile.image}} </div>
 
         <div class="content text-left margin-top">
         <h2 class="ui blue header margin-top">
-          {{ user.profile.firstName }} {{ user.profile.lastName }}
+          {{ profile.firstName }} {{ profile.lastName }}
         </h2>
         <div class="meta">
           <h5 class="ui header">Description:</h5>
         </div>
         <div class="description margin-top">
-          <p>{{ user.profile.bio }}</p>
+          <p>{{ profile.bio }}</p>
         </div>
 
         <div class="text-right">
           <sui-button @click.native="toggle">Edit Profile</sui-button>
 
-          <sui-modal v-model="open">
+          <sui-modal class="edit-modal" v-model="open">
             <sui-modal-header> ON EDIT ... </sui-modal-header>
             <Notification class="error" :message="error" v-if="error"></Notification>
 
-
             <sui-modal-content image>
-              <div class="text-centred padding-right">
-                <img class="img-position" height="42" width="42" :src="this.selectedImage">
-                <!--<sui-image class="img-position" height="42" width="42" :src="this.selectedImage"></sui-image>-->
-                <input class="input-file" type="file" name="file" id="file" @change="onFileSelected">
-                <label for="file" style="cursor: pointer;"><i class="edit icon edit-icon"></i></label>
+              <div class="text-centred">
+                <img class="img-position" :src="this.selectedImage">
+                <input class="input-file" type="file" name="file" id="file" @change="uploadImage" accept="image/*">
+                <label class="text-centred" for="file" style="cursor: pointer;"><i class="edit icon edit-icon"></i></label>
               </div>
 
-              <sui-form>
+              <sui-form style="margin-left: 1rem !important;">
                 <sui-modal-content>
+                  <sui-container style="margin: 0 !important;" text>
                   <sui-form-field>
                   <sui-header class="tiny header">FirstName</sui-header>
-                  <sui-input v-model="user.profile.firstName"></sui-input>
+                  <sui-input class="input-width" v-model="getProfile.firstName" ></sui-input>
                   </sui-form-field>
 
                   <sui-form-field>
                   <sui-header class="tiny header">LastName</sui-header>
-                  <sui-input v-model="user.profile.lastName"></sui-input>
+                  <sui-input class="input-width" v-model="this.lastName"></sui-input>
                   </sui-form-field>
-                  <sui-container text>
                     <sui-form-field>
                       <sui-header class="tiny header">Description</sui-header>
-                      <textarea v-model="user.profile.bio"></textarea>
+                      <textarea class="input-width" v-model="this.bio"></textarea>
                     </sui-form-field>
                   </sui-container>
 
@@ -62,7 +57,6 @@
               <sui-button positive @click.native="save"> Save </sui-button>
               <sui-button basic color="red" @click.native="toggle">Cancel</sui-button>
             </sui-modal-actions>
-
           </sui-modal>
 
           <a class="ui red basic floated button margin-top" @click.native="deleteUser"> Delete </a>
@@ -76,26 +70,26 @@
 
 <script>
   import Notification from "../components/Notification.vue"
+  import {mapMutations, mapGetters} from "vuex"
+
 
   export default {
     name: "Profile",
-    components: {
-      Notification
+    middleware: 'auth',
+    components: { Notification },
+    computed: {
+      ...mapMutations('profile', ['setProfile']),
+      ...mapGetters('profile', ['getProfile'])
+    },
+    created (){
+      this.profile = Object.assign({}, this.$store.getters.getProfile);
     },
     data() {
       return {
-        firstName: '',
-        lastName: '',
-        bio: '',
-        selectedImage: 'http://localhost:3000/_nuxt/img/defaultProfilePicture.319d0ad.png',
+        profile: {},
+        selectedImage: '',
         open: false,
         error: null
-      }
-    },
-    middleware: 'auth',
-    computed : {
-      user() {
-        return this.$store.getters.getLoggedUser
       }
     },
     methods: {
@@ -103,35 +97,47 @@
         this.open = !this.open
       },
 
-      onFileSelected(event) {
-        const maybeImage = event.target.files[0];
+      uploadImage: function(){
+        const _this = this;
 
-        if(maybeImage.type !== "image/jpeg"){
-          if (maybeImage.type !== "image/png") {
-            this.error = "Incompatible type. Please select an other profile picture.";
-          }
-        }
+        const file = document
+          .querySelector('input[type=file]')
+          .files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          _this.selectedImage = e.target.result
+        };
+        reader.onerror = function(error) {
+          this.error = error;
+        };
+        reader.readAsDataURL(file);
+      },
 
-        function getBase64(file) {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = function () {
-            return reader.result
-          };
-          reader.onerror = function (error) {
-            this.error = error;
-          };
-        }
-
-        this.selectedImage = getBase64(maybeImage);
-
-        console.log("Selected Image: \n", getBase64(maybeImage));
+      async save() {
+        await this.$axios.put('profile', {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          image: this.selectedImage,
+          bio: this.bio
+        })
+          .then(response => {
+            console.log("response ===", response);
+          })
+          .catch(e => this.error = e)
       }
     }
   }
 </script>
 
 <style scoped>
+  .input-width {
+    width: 35rem !important;
+  }
+
+  .edit-modal {
+    display: inline-flex !important;
+  }
+
   .input-file {
     width: 0.1px;
     height: 0.1px;
@@ -154,7 +160,9 @@
   }
 
   .edit-icon {
+    text-align: right !important;
     margin: 0 4rem 0 4rem ;
     padding-right: 1.6rem ;
   }
+
 </style>

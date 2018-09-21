@@ -31,7 +31,7 @@
   export default {
     components: {NuxtLink},
     computed: {
-      ...mapGetters(['isAuthenticated', 'loggedUser'])
+      ...mapGetters('auth', ['isAuthenticated', 'getLoggedUser'])
     },
     props: {
       disconnected: {

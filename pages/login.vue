@@ -45,8 +45,8 @@ export default {
     Notification
   },
   computed: {
-    ...mapMutations(['updateAuth']),
-    ...mapGetters(['isAuthenticated'])
+    ...mapMutations('auth', ['updateAuth', 'updateUser']),
+    ...mapGetters('auth', ['isAuthenticated'])
   },
   data() {
     return {
@@ -65,11 +65,14 @@ export default {
       })
         .then(res => {
           Cookie.set('token', res.data.token, { expires: this.rememberMe ? 365 : null });
-          this.$store.commit('updateAuth', !(this.isAuthenticated));
-          this.$store.commit('updateUser', res.data.user);
+
+          this.$store.commit('auth/updateAuth', !(this.isAuthenticated));
+          this.$store.commit('auth/updateUser', res.data.user);
+
           this.$router.push('/');
       })
         .catch(e => {
+          console.log("error \n", e);
           this.error = e
       })
     }
